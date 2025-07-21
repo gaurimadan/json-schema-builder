@@ -50,6 +50,11 @@ function SchemaField({ field, onUpdate, onRemove }) {
           <Option value="String">String</Option>
           <Option value="Number">Number</Option>
           <Option value="Nested">Nested</Option>
+          <Option value="Boolean">Boolean</Option>
+          <Option value="Date">Date</Option>
+          <Option value="Array">Array</Option>
+          <Option value="Object">Object</Option>
+          <Option value="float">float</Option>
         </Select>
         <Button
           type="text" 

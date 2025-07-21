@@ -19,6 +19,17 @@ const buildJsonSchema = (fieldsArray) => {
         properties: buildJsonSchema(field.children) 
       };
     }
+    else if (field.type === 'Boolean') {
+      schema[field.name] = { type: 'boolean', default: false };
+    } else if (field.type === 'Date') {
+      schema[field.name] = { type: 'string', format: 'date-time', default: new Date().toISOString() };
+    } else if (field.type === 'Array') {
+      schema[field.name] = { type: 'array', items: { type: 'string' }, default: [] };
+    } else if (field.type === 'Object') {
+      schema[field.name] = { type: 'object', properties: {} };
+    } else if (field.type === 'float') {
+      schema[field.name] = { type: 'number', format: 'float', default: 0.0 };
+    }
   });
   return schema;
 };
@@ -80,7 +91,7 @@ function App() {
 
   return (
     <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
-      <Title level={2} style={{ textAlign: 'center', marginBottom: '30px' }}>JSON Schema Builder (Ant Design - Manual State)</Title>
+      <Title level={2} style={{ textAlign: 'center', marginBottom: '30px' }}>JSON Schema Builder</Title>
 
       <Row gutter={[16, 16]}>
         <Col xs={24} lg={12}>
@@ -95,9 +106,9 @@ function App() {
             ))}
 
             <Button
-              type="dashed"
+            
               onClick={addField}
-              style={{ width: '100%', marginTop: '20px' }}
+              style={{ width: '100%', marginTop: '20px',color:"#ffffff",backgroundColor: '#1677ff' }}
             >
               Add Field
             </Button>
@@ -111,7 +122,6 @@ function App() {
               borderRadius: '8px',
               overflowX: 'auto',
               minHeight: '320px',
-              whiteSpace: 'pre-wrap',
               wordBreak: 'break-all'
             }}>
               {JSON.stringify(jsonSchemaOutput, null, 2)}
